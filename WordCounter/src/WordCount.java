@@ -25,7 +25,16 @@ public class WordCount {
         }
     }
  } 
-        
+ public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+	    public void reduce(Text key, Iterator<IntWritable> values, Context context) 
+	      throws IOException, InterruptedException {
+	        int sum = 0;
+	        while (values.hasNext()) {
+	            sum += values.next().get();
+	        }
+	        context.write(key, new IntWritable(sum));
+	    }
+	 }     
 
         
  public static void main(String[] args) throws Exception {
